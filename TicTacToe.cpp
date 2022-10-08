@@ -2,17 +2,18 @@
 
 using namespace std;
 
+// Using global variables 
 char matrix[3][3] = {{'1', '2', '3'}, {'4', '5', '6'}, {'7', '8', '9'}};
 int row;
 int col;
 char token = 'X';
 bool tie = false;
-string n1;
-string n2;
+string pers1;
+string pers2;
 
 void	matrice()
 {
-	//creating structure, matrix 
+	// creating Tic_Tac_Toe structure 
 	cout << "	|	|	\n";
 	cout << "   "<<matrix[0][0]<<"	|   "<<matrix[0][1]<<"   |   "<<matrix[0][2]<<" \n";
 	cout << "________|_______|________\n";
@@ -30,13 +31,13 @@ void	pos()
 
 	if (token == 'X')
 	{
-		cout<<n1<<", entrez un chiffre entre 1 et 9:";
+		cout<<pers1<<", enter a digit between 1 and 9: ";
 		cin>>digit;
 	}
 
 	if(token == '0')
 	{
-		cout<<n2<<", entrez un chiffre entre 1 et 9:";
+		cout<<pers2<<", enter a digit between 1 and 9: ";
 		cin>>digit;
 	}
 
@@ -86,7 +87,7 @@ void	pos()
 		col = 2;
 	}
 	else 
-		cout<<"Chiffre non valide"<<endl;
+		cout<<"Invalid Number"<<endl;
 
 	if (token == 'X' && matrix[row][col] != 'X' && matrix[row][col] != '0')
 	{
@@ -100,26 +101,26 @@ void	pos()
 	}
 	else
 	{
-		cout << "pas d'espace libre"<< endl;
+		cout << "No space available"<< endl;
 		pos();
 	}
 }
 
 bool	score()
 {
-	// check les lignes
+	// Check lines
 	for (int i = 0; i < 3; i++)
 	{
 		if (matrix[i][0]==matrix[i][1] && matrix[i][0]==matrix[i][2] || matrix[0][i]==matrix[1][i] && matrix[0][i]==matrix[2][i])
 		return true;
 	}
-	// les diagonales
+	// Check diagonales
 	if (matrix[0][0]==matrix[1][1] && matrix[1][1]==matrix[2][2] || matrix[0][2]==matrix[1][1] && matrix[1][1]==matrix[2][0])
 	{
 		return true;
 	}
 	
-	// Check les espaces vides
+	// Check empty space
 	for (int i = 0; i < 3; i++)
 	{
 		for (int j = 0; j < 3; j++)
@@ -136,15 +137,23 @@ bool	score()
 int main(void)
 {
 	cout << "Entrez le nom du premier joueur: \n";
-	getline(cin, n1);
+	getline(cin, pers1);
 	cout << "Entrez le nom du second joueur: \n";
-	getline(cin, n2);
-	cout << n1 << " est le joueur qui commence\n";
+	getline(cin, pers2);
+	cout << pers1 << " est le joueur qui commence\n";
 	while (!score())
 	{
 		matrice();
 		pos();
 		score();
 	}
+
+	if (token == 'X' && tie == false)
+		cout<<pers2<<" won!!"<<endl;
+	else if (token == '0' && tie == false)
+		cout<<pers1<<" won!!"<<endl;
+	else
+		cout<<"It's a draw!"<<endl;
+
 	return (0);
 }
